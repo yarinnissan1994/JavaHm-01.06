@@ -1,5 +1,7 @@
 import Exceptions.BankAccount;
 import Exceptions.InsufficientFundsException;
+import Files.FileTools;
+import Polymorphism.*;
 
 import java.io.*;
 import java.util.InputMismatchException;
@@ -18,7 +20,7 @@ public class Main {
 //            System.out.println(animal.getClass());
 //            animal.eat();
 //            animal.makeSound();
-//        }s
+//        }
 
 //        *** Exceptions ***
 //        try{
@@ -34,7 +36,7 @@ public class Main {
 //        catch (InputMismatchException e){
 //            System.out.println("Invalid input! Please enter integers only.");
 //        }
-//
+
 //        BankAccount myAccount = new BankAccount(123456, 1000);
 //        myAccount.getBalance();
 //        myAccount.deposit(500);
@@ -43,38 +45,18 @@ public class Main {
 //        myAccount.getBalance();
 //        myAccount.withdraw(500);
 
-        String fileContent = "";
-        String line;
+
+//        *** File ***
 
         System.out.print("Please enter a file path to read from: ");
-        String FileName = scan.nextLine();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(FileName));
-            while((line = reader.readLine()) != null) {
-                fileContent = fileContent + line + "\n";
-            }
-            reader.close();
-            System.out.print(fileContent);
+        String fileName = scan.nextLine();
+        String fileContent = FileTools.fileReader(fileName);
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        fileContent = fileContent.toUpperCase();
-        System.out.println(fileContent);
+        fileContent = FileTools.processContent(fileContent);
 
         System.out.print("Please enter a file path to put the new file: ");
-        FileName = scan.nextLine();
+        fileName = scan.nextLine();
 
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(FileName));
-            writer.write(fileContent);
-            writer.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        FileTools.fileWriter(fileName, fileContent);
     }
 }
